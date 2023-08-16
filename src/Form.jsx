@@ -1,6 +1,6 @@
 import {React, useState } from 'react'
 
-const Form = (onAddUser) => {
+const Form = ({onAddUser}) => {
 
     const [nombre, setNombre] = useState("");
     const [color, setColor] = useState("");
@@ -10,8 +10,8 @@ const Form = (onAddUser) => {
     
     
     const handleSubmit = (e) => {
+
         e.preventDefault();
-    
     
         setErrorNombre("");
         setErrorColor("");
@@ -20,18 +20,20 @@ const Form = (onAddUser) => {
           setErrorNombre(
             'Por favor chequea que la información sea correcta, El nombre debe tener al menos 3 caracteres y no debe comenzar con espacios en blanco.'
           );
-        } else {
-            onAddUser({nombre})
-            setNombre("") 
+          return;
         }
     
         if (color.length < 6) {
           setErrorColor('Por favor chequea que la información sea correcta, el color debe tener al menos 6 caracteres.');
-        } else { 
-            onAddUser({color})
-            setColor("") 
-        }
+          return;
+        } 
+
     
+        if (nombre && color) {
+            onAddUser({nombre, color})
+            setNombre("");
+            setColor("");
+        }
 
       };
 
